@@ -1,0 +1,413 @@
+INITIAL CAPSTONE UX AUDIT
+Week 1 testing workbook | ITE 4 – Web Systems and Technologies 2
+Project details
+Complete before testing
+Capstone title
+AidLink: LINGAP Applicant App and Web Administration System
+Replace with your approved capstone title if different.
+Name / Group; Section / Block
+______________________________________________________
+Instructor; Date submitted
+______________________________________________________
+Testing date(s); Facilitator / Observer
+______________________________________________________
+App build; Website version / commit
+______________________________________________________
+Phone / OS; Browser / version; Screen size
+______________________________________________________
+Test server address; Network used
+______________________________________________________
+
+Purpose and use
+Audit both the applicant mobile app and the LINGAP web administration system before observing users. This workbook adapts the teacher’s three-part template and its proof-of-audit appendix. It contains planned checks, not completed testing results.
+Complete Part 1 while using the running system. Log confirmed issues in Part 2, plan user sessions in Part 3, and attach actual evidence in Appendix A. Leave signatures and results blank until the activity is completed.
+Prepare a repeatable test session
+Use a test server, fictional applicant/patient profiles and clearly marked sample documents. Prepare staff accounts, an active training facility and separate requests for approval and denial. Keep the phone and website connected to the same test backend.
+Have a valid document set, a sample guarantee letter, an unsupported file and an oversized file ready. Do not use real IDs, medical records, passwords or live applicant decisions in screenshots.
+Scope: Home, Requests, Facilities, Alerts and Account in the app; Overview, Assistance requests, Requestors, Facilities and administrator account screens on the web. Test setup and recovery checks are facilitator activities.
+
+
+[PAGE BREAK]
+
+PART 1: AUDIT CHECKLIST
+Usability and core functionality
+Mark ✓ (met), ✗ (not met), or Partial after testing. Leave untested rows blank and write “Not tested” in Notes. Use N/A only with a reason. For ✗/Partial, include evidence and an issue ID; Notes are optional for ✓.
+Dimension
+AidLink / LINGAP checklist item
+Check
+Notes / evidence ID
+Usability
+U1 • App: A first-time applicant can find the new-request flow from Home.
+
+
+Usability
+U2 • App: Patient identity and relationship fields can be completed without confusing the patient with the account holder.
+
+
+Usability
+U3 • App: The applicant can choose the appropriate assistance type and understand which documents to attach.
+
+
+Usability
+U4 • App: The review screen lets the applicant check information and understand consent before submission.
+
+
+Usability
+U5 • Web: Staff can locate the intended application and distinguish review, approval and denial actions.
+
+
+Functionality
+F1 • Both: Valid sign-in works; incorrect credentials give useful feedback; sign-out ends access to the session.
+
+
+Functionality
+F2 • App: Required fields and invalid dates are identified; correcting an error allows progress.
+
+
+Functionality
+F3 • App: Documents can be selected/replaced; unsupported or oversized files get understandable feedback.
+
+
+Functionality
+F4 • App → web: Submission creates one matching request with a reference, assistance type and document links.
+
+
+Functionality
+F5 • Web: Review/denial requires remarks; approval requires remarks and a valid guarantee-letter file.
+
+
+
+Evaluator: ____________________  Date / time: ____________________  Build: ____________________
+
+
+[PAGE BREAK]
+
+PART 1: AUDIT CHECKLIST (continued)
+Accessibility and responsiveness
+Mark ✓ (met), ✗ (not met), or Partial after testing. Leave untested rows blank and write “Not tested” in Notes. Use N/A only with a reason. For ✗/Partial, include evidence and an issue ID; Notes are optional for ✓.
+Dimension
+AidLink / LINGAP checklist item
+Check
+Notes / evidence ID
+Accessibility
+A1 • Both: Labels, instructions and status text remain readable against their backgrounds.
+
+
+Accessibility
+A2 • Both: Pending, Under Review, Approved and Denied can be understood without relying only on color.
+
+
+Accessibility
+A3 • Web: Keyboard users can reach controls in logical order and identify the focused item.
+
+
+Accessibility
+A4 • Web: Request dialogs can be used and closed with the keyboard, with focus returned sensibly.
+
+
+Accessibility
+A5 • App: A screen reader announces navigation, form labels, important icons and validation feedback.
+
+
+Accessibility
+A6 • Both: Buttons and links can be selected accurately; document/QR alternatives have meaningful labels.
+
+
+Responsiveness
+R1 • App: On the smallest available phone, the keyboard does not hide required fields or the next/submit action.
+
+
+Responsiveness
+R2 • App: Larger system text leaves request forms, review dialogs and navigation readable and usable.
+
+
+Responsiveness
+R3 • Web: At phone, tablet and laptop widths, navigation and request actions remain reachable.
+
+
+Responsiveness
+R4 • Web: At 200% browser zoom, dialogs, tables and file controls remain usable without clipped actions.
+
+
+
+Evaluator: ____________________  Date / time: ____________________  Build: ____________________
+
+
+[PAGE BREAK]
+
+PART 1: AUDIT CHECKLIST (continued)
+Content quality, recovery and consistency
+Mark ✓ (met), ✗ (not met), or Partial after testing. Leave untested rows blank and write “Not tested” in Notes. Use N/A only with a reason. For ✗/Partial, include evidence and an issue ID; Notes are optional for ✓.
+Dimension
+AidLink / LINGAP checklist item
+Check
+Notes / evidence ID
+Content Quality
+C1 • Both: Assistance descriptions, field labels and required-document names use clear, consistent language.
+
+
+Content Quality
+C2 • Both: Status messages distinguish submission, review and approval; instructions do not promise cash release.
+
+
+Content Quality
+C3 • Both: Errors explain what happened and a useful next action, without unexplained technical terms.
+
+
+Functionality
+F6 • Web → app: Review, approval and denial changes appear on the matching applicant request after refresh.
+
+
+Functionality
+F7 • App: Approved requests show the correct guarantee letter and QR/verification ID; document links open.
+
+
+Functionality
+F8 • Both: An assigned active facility matches across systems; missing assignment is clearly explained.
+
+
+Functionality
+F9 • App: Opening an alert shows the correct request and updates its read state; another account’s alerts are not shown.
+
+
+Functionality
+F10 • Both: Searches and filters return the expected request; no-match and empty states are understandable.
+
+
+Functionality
+F11 • App: Losing connection shows useful feedback; reconnecting/refreshing recovers without a misleading success message.
+
+
+Functionality
+F12 • Web → app: After a test requirement change, a fresh app request shows the configured requirements or a mismatch is logged.
+
+
+
+Evaluator: ____________________  Date / time: ____________________  Build: ____________________
+
+
+[PAGE BREAK]
+
+PART 2: LIST OF AT LEAST 5 ISSUES
+Complete from observed problems. Do not invent issues to fill the table.
+Use the checklist ID and app/web screen to locate each issue. Describe what the user did, what actually happened and the expected behavior. Explain the practical consequence for an applicant or staff member.
+#
+Issue description / steps
+Dimension
+Likely impact on real user
+Suggested fix (optional)
+I01
+Screen / check ID:
+
+Steps / actual / expected:
+
+
+
+I02
+Screen / check ID:
+
+Steps / actual / expected:
+
+
+
+I03
+Screen / check ID:
+
+Steps / actual / expected:
+
+
+
+I04
+Screen / check ID:
+
+Steps / actual / expected:
+
+
+
+I05
+Screen / check ID:
+
+Steps / actual / expected:
+
+
+
+
+Add I06+ rows/pages as needed. Attach matching evidence in Appendix A. If fewer than five issues are confirmed, keep unused rows blank and ask the instructor how to report the shortfall.
+Audit summary — strongest areas and areas needing follow-up
+________________________________________________________________________________
+________________________________________________________________________________
+
+
+[PAGE BREAK]
+
+PART 3: USER OBSERVATION / FEEDBACK PLAN
+3a. Planned participants
+Participant role / target
+Why appropriate
+Planned tasks
+P01–P03: 3 adult applicant-role users
+Include different levels of smartphone confidence and a first-time user. They reflect the application, tracking and facility-information workflow.
+M1–M4; shorten the set if needed.
+P04–P05: 2 staff-role users
+Prefer LINGAP/CMO personnel who review requests. If unavailable, identify substitutes as role-playing testers and state the limitation.
+W1–W4.
+P06–P10: optional additional users
+Expand to 5–10 total as recommended in the teacher’s template. Include relevant accessibility needs when feasible and voluntary.
+Repeat the same core tasks.
+
+3b. Neutral observation questions
+1. What do you think you can do on this screen?
+2. What would you do next, and what do you expect to happen?
+3. What tells you whether the request or decision was saved?
+4. Which part, if any, was unclear, and what did you expect instead?
+3c. Testing tool / method
+Use moderated, in-person think-aloud sessions with one facilitator and one note-taker. Plan about 25–35 minutes per participant, including consent and feedback. Pilot the task set once; use the same core tasks for comparable participants. Record time, independent completion, assistance, errors, successes and direct quotes.
+Use screen captures or photos only with consent. Record accessibility/resizing checks separately from user opinions. An optional browser audit report supports the manual audit but does not replace observation. Record the tool, version, date and tested screen if used.
+Read at the start
+“We are testing the system, not you. Please use the supplied fictional information and say what you are thinking. You may skip a task or stop at any time. I will usually let you try first, and I will record any help I give.”
+Task outcomes: Independent / Assisted / Incomplete / Not attempted. Begin timing after reading the task; stop when completed or the participant stops. Record hints instead of counting assisted work as independent.
+
+
+[PAGE BREAK]
+
+PART 3: APP TASK CARDS
+Read only the scenario aloud. The facilitator notes define preparation and completion checks.
+M1 — Start an applicant session
+Using the supplied fictional identity, create an account and sign in. Show where you would begin asking for assistance.
+Facilitator only: Prepare a unique test email and an available server. Observe label understanding, validation, password entry, confirmation and the route to a new request. Success: participant reaches an authenticated Home screen without a hint.
+M2 — Submit an assistance request
+The fictional patient needs Hospital Assistance. Enter the supplied patient information, attach the sample requirements, explain the need, review the information and submit. Tell us how you know it was sent.
+Facilitator only: Prepare all documents shown for this assistance type. Observe patient/relationship fields, file selection or replacement, review and consent. Success: one request is submitted and the participant can find its reference number and Pending status. Record the reference for web testing.
+M3 — Find a decision and approval documents
+Find the supplied request and explain its current status. For the approved example, show the document and verification information you would present at the facility.
+Facilitator only: Prepare separate Pending, Under Review, Approved and Denied examples for this applicant. Observe search/filter use and status interpretation. Success: correct request found; approved guarantee letter and QR/verification ID located. Opening a document must be observed, not assumed.
+M4 — Find an update and assigned facility
+Find the latest update about your request. Then show where you would go for the approved request and find the facility address and available contact information.
+Facilitator only: Prepare a notification and an approved request with an assigned active facility. Success: relevant update and matching facility details found. Directions may open a map; do not place a real call. Finish by asking the participant to sign out.
+Record outcome, elapsed time, hints, quotes and evidence in the Week 2 Observation Record. Do not coach the route through the interface.
+
+
+[PAGE BREAK]
+
+PART 3: WEB TASK CARDS
+Read only the scenario aloud. The facilitator notes define preparation and completion checks.
+W1 — Locate and review an application
+Sign in with the supplied staff account. Find the request with the supplied reference, inspect the applicant details and supporting documents, and explain what you would review.
+Facilitator only: Provide an Administrator or Super Admin test account and the reference from M2. Success: the matching record and its documents are found. Note use of Overview, Assistance requests and Requestors, and any confusion between applicant and patient details.
+W2 — Record review and approval
+For the approved training case, record that review has started. Then record the approval using the supplied decision note, sample guarantee letter and designated training facility.
+Facilitator only: Use a Pending training request, a PDF/JPG/PNG letter no larger than 10 MB, and an eligible active facility. Observe required remarks and file feedback. Success: Under Review then Approved is saved with the letter; the chosen facility is shown. Facility assignment is currently optional; select one for this scenario.
+W3 — Record a denial
+A separate fictional application did not satisfy the stated training requirements. Record the supplied denial explanation and check that the decision was saved.
+Facilitator only: Use a different Pending or Under Review request. Success: Denied and the decision note appear in the request/audit trail. Ask what the applicant would need to understand next; do not imply a resubmission feature exists.
+W4 — Maintain facility information
+Find the designated training facility, correct its supplied contact details and verify the saved information. Then find the required-document list for the supplied assistance type.
+Facilitator only: Prepare a training facility and replacement contact details. Success: the intended record is updated and the correct requirements list is located. Optional developer follow-up: change one requirement and check a fresh app request for consistency; restore the test configuration afterward.
+Record outcome, elapsed time, hints, quotes and evidence in the Week 2 Observation Record. Do not coach the route through the interface.
+
+
+[PAGE BREAK]
+
+PART 3: FACILITATOR TEST SETUP
+Shared test data and app-to-web checks
+Preparation item
+Record your testing value
+Fictional applicant / patient
+Account name: __________________  Patient name: __________________
+Unique test email: __________________  Relationship: ________________
+Assistance and sample files
+Core task: Hospital Assistance
+Patient details sheet: __________  Requirement files: ________________
+Separate decision cases
+Approval request reference: _____________________________________
+Denial request reference: _______________________________________
+Staff and facility
+Staff role: __________________  Training facility: __________________
+Sample guarantee letter: ________________________________________
+Additional state examples
+Pending: __________________  Under Review: _____________________
+Approved: _________________  Denied: __________________________
+Test environment
+Phone server URL: _________________  Web URL: _________________
+Do not record account passwords in this workbook.
+
+H1 — Verify the complete handoff (facilitator only)
+1. Submit M2 in the app. Record the reference and submission time. Open that reference in the web system and compare patient/applicant details, assistance type and documents.
+2. In the web system, save Under Review, then approve using the sample letter and training facility. Record the decision time; refresh the app and record when each status becomes visible.
+3. Open the app’s guarantee letter and QR/verification display. Check the assigned facility and related alert. Confirm that refreshing does not change the approval’s verification ID.
+4. Deny a different training request and verify the matching app status. Sign out and use a second test applicant account to check that the first applicant’s requests and alerts are not shown.
+H2 — Recovery and configuration (optional follow-up)
+Briefly disconnect the phone during a safe read or sample submission, record the message, reconnect and retry. Check for duplicate submissions. Change a training document requirement on the web and compare a fresh app request. Record discrepancies as issues and restore the training configuration.
+Keep these controlled checks separate from participant task scores. This workbook does not assume automatic push updates or successful synchronization; record the actual refresh behavior and delay.
+
+
+[PAGE BREAK]
+
+APPENDIX A: PROOF OF AUDIT ACTIVITY
+A1. Screenshot evidence — issues I01–I03
+Attach actual captures for Part 2 issues. Match each image to its issue ID and include a short caption describing the visible problem.
+Issue I01: insert screenshot / photo
+Evidence details
+[Paste actual issue screenshot here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+Issue I02: insert screenshot / photo
+Evidence details
+[Paste actual issue screenshot here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+Issue I03: insert screenshot / photo
+Evidence details
+[Paste actual issue screenshot here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+
+
+[PAGE BREAK]
+
+APPENDIX A: PROOF OF AUDIT ACTIVITY
+A1. Screenshot evidence — issues I04–I05
+Issue I04: insert screenshot / photo
+Evidence details
+[Paste actual issue screenshot here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+Issue I05: insert screenshot / photo
+Evidence details
+[Paste actual issue screenshot here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+A2. Automated tool report (optional)
+Tool / version / date
+Screenshot or attachment reference
+Score / summary and limitations
+___________________
+[Insert actual report or evidence filename]
+____________________________
+Screen tested: ________________
+
+A3. Certification of authenticity
+I certify that I personally conducted this audit on my own Capstone application on the date(s) indicated above.
+Printed name: __________________________________  Signature: _________________________
+Date signed: ____________________
+Sign only after completing the audit. Supporting basis: the teacher’s Week1_Initial_Capstone_UX_Audit.docx and the local AidLink app/web source files. Expected checks are not evidence of successful behavior.

@@ -1,0 +1,58 @@
+*** Begin Patch
+*** Update File: server/postgres.integration.test.js
+@@
+   assert.equal(hardApproval.status, 'approved');
+   assert.equal(Number((await database.query(`SELECT count(*) FROM audit_logs WHERE action_type = 'hard_disqualifier_exception_recorded' AND affected_record_id = $1`, [hardException.id])).rows[0].count), 1);
++
++  const activeCoveragePolicy = await repositories.policies.createPolicyVersion({
++    policyKey: 'coverage_matrix', actorId: 'admin-test', effectiveDate: new Date('2026-01-01T00:00:00Z'),
++    justification: 'Activate isolated test-only coverage values.',
++    configuration: {
++      status: 'active', publicHospitalRoomReductions: { semi_private: 0.25, private: 0.5 },
++      outsidePharmacyMedicineReductionRate: 0.4,
++      partialIndigentSubsidyBands: [{ code: 'test-band', rate: 0.5 }],
++      coverageCaps: { default: 30, byAssistanceType: {} },
++      payerDeductions: { enabled: true, required: true, clientApprovalReference: 'TEST-CLIENT-PAYER', approvedPayerTypes: ['Test payer'], verificationMethods: ['staff', 'integration'] },
++    },
++  });
++  const coverageRequest = await repositories.aidLink.submitRequest({
++    id: 'coverage-request', requestNumber: 'TEST-COVERAGE-0001', applicantId: 'applicant-test',
++    beneficiary: { id: 'coverage-beneficiary', fullName: 'Coverage Patient', isRequester: false },
++    assistanceType: 'Hospital Assistance', patientCircumstance: 'Disease',
++    policyVersionId: nextPolicy.id, policyVersion: nextPolicy.policyVersion,
++    decisionSnapshot: {}, originatingOfficeId: 'office-test', idempotencyKey: 'coverage-request',
++  });
++  await database.query(`UPDATE requests SET facility_tier_snapshot = 'public' WHERE id = $1`, [coverageRequest.request.id]);
++  const coverageInput = await repositories.coverage.recordVerifiedInput({
++    requestId: coverageRequest.request.id, actorId: 'staff-test', verificationSource: 'staff',
++    justification: 'Staff verified bill, payer, room, medicine, and subsidy evidence.',
++    inputData: {
++      grossAmount: 40, payerDeductions: [{ payerType: 'Test payer', amount: 10, reference: 'TEST-PAYER-1' }],
++      roomClass: 'private', roomCharges: 10,
++      medicineItems: [{ amount: 5, formulary: false, branded: true, pharmacyAccredited: false }],
++      subsidyBand: 'test-band', subsidyBandVerified: true,
++    },
++  });
++  assert.equal(coverageInput.version, 1);
++  const beforeHardClearance = await repositories.coverage.calculateRequest({ requestId: coverageRequest.request.id, actorId: 'staff-test' });
++  assert.equal(beforeHardClearance.outcome, 'ineligible');
++  assert.equal(beforeHardClearance.reasonCodes.includes('HARD_DISQUALIFIER_NOT_CLEARED'), true);
++  const coverageDecision = await repositories.aidLink.recordDecision({
++    requestId: coverageRequest.request.id, decision: 'approved', policyVersionId: nextPolicy.id,
++    decisionSnapshot: {}, actorId: 'staff-test', justification: 'Approve after ordered hard-rule and coverage evaluation.',
++    budgetReservation: { budgetId: 'budget-test', amount: 999, idempotencyKey: 'coverage-budget' },
++  });
++  assert.equal(coverageDecision.status, 'approved');
++  const storedCoverageDecision = (await database.query(`SELECT * FROM coverage_decisions WHERE request_id = $1 ORDER BY decided_at DESC LIMIT 1`, [coverageRequest.request.id])).rows[0];
++  assert.equal(Number(storedCoverageDecision.amount), 11.5);
++  assert.ok(storedCoverageDecision.coverage_snapshot_id);
++  const storedCoverage = (await database.query('SELECT * FROM coverage_calculation_snapshots WHERE id = $1', [storedCoverageDecision.coverage_snapshot_id])).rows[0];
++  assert.equal(storedCoverage.policy_version, activeCoveragePolicy.policyVersion);
++  assert.equal(storedCoverage.result.patientBalance, 30);
++  assert.equal(storedCoverage.result.eligibleBase, 23);
++  assert.equal(storedCoverage.result.coveredAmount, 11.5);
++  assert.equal(storedCoverage.result.netRemainingBalance, 18.5);
++  await assert.rejects(database.query('UPDATE coverage_calculation_snapshots SET calculator_version = $2 WHERE id = $1', [storedCoverage.id, 'changed']));
++  assert.equal(Number((await database.query(`SELECT amount FROM budget_reservations WHERE request_id = $1`, [coverageRequest.request.id])).rows[0].amount), 11.5);
+ });
+*** End Patch

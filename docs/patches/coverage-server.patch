@@ -1,0 +1,67 @@
+*** Begin Patch
+*** Update File: server/server.js
+@@
+         request.hardDisqualifierEvaluationId = hardResult.evaluationId;
+         request.hardDisqualifierReasonCodes = hardResult.reasonCodes;
++        const coveragePolicy = await storageFoundation.repositories.policies.getEffectivePolicy({ policyKey: 'coverage_matrix', assistanceType: request.assistanceType, at: new Date() });
++        if (coveragePolicy?.configuration?.status === 'active') {
++          let coverageResult;
++          try {
++            coverageResult = await storageFoundation.repositories.coverage.calculateRequest({ requestId: request.id, actorId: actor.id, justification: 'Calculate the coverage matrix after hard-disqualifier clearance and before approval.' });
++          } catch (error) {
++            if (error?.code === 'COVERAGE_INPUT_REQUIRED') return res.status(409).json({ code: error.code, message: error.message });
++            throw error;
++          }
++          if (coverageResult.outcome === 'ineligible') return res.status(409).json({ code: 'COVERAGE_INELIGIBLE', message: coverageResult.adjustments[0]?.message || 'The active coverage matrix returned ineligible.', coverage: coverageResult });
++          request.coverageMatrixOutcome = coverageResult.outcome;
++          request.coverageSnapshotId = coverageResult.snapshotId;
++          request.coveredAmount = coverageResult.coveredAmount;
++          request.netRemainingBalance = coverageResult.netRemainingBalance;
++        }
+       }
+@@
+-    const status = ['INVALID_HARD_DISQUALIFIER_POLICY', 'ARMED_GROUP_APPROVAL_REQUIRED'].includes(error?.code) ? 400 : 500;
++    const status = ['INVALID_HARD_DISQUALIFIER_POLICY', 'ARMED_GROUP_APPROVAL_REQUIRED', 'INVALID_COVERAGE_POLICY', 'PAYER_APPROVAL_REQUIRED', 'INVALID_PAYER_VERIFICATION', 'APPLICANT_PAYER_FIELD_FORBIDDEN'].includes(error?.code) ? 400 : 500;
+@@
+ app.put('/api/staff/:id/capabilities/hard-disqualifier-exception', requireAuth, requirePermission(Permissions.HARD_DISQUALIFIER_EXCEPTION_MANAGE), async (req, res) => {
+@@
+ });
++
++app.post('/api/requests/:id/coverage-inputs', requireAuth, requirePermission(Permissions.REQUESTS_PROCESS), async (req, res) => {
++  if (!storageFoundation.database || !storageFoundation.repositories?.coverage) return res.status(503).json({ message: 'Coverage input storage requires PostgreSQL.' });
++  const justification = String(req.body?.justification || '').trim();
++  const verificationSource = String(req.body?.verificationSource || 'staff').trim();
++  if (justification.length < 10) return res.status(400).json({ message: 'Enter a clear justification for the verified coverage inputs.' });
++  try {
++    const request = (await storageFoundation.database.query('SELECT * FROM requests WHERE id = $1', [req.params.id])).rows[0];
++    if (!request || !requestIsPermittedForStaff(request, req.auth)) return res.status(404).json({ message: 'Request not found.' });
++    const recorded = await storageFoundation.repositories.coverage.recordVerifiedInput({ requestId: request.id, actorId: req.auth.sub, verificationSource, justification, inputData: req.body?.inputData });
++    return res.status(201).json(recorded);
++  } catch (error) {
++    const status = ['COVERAGE_VERIFICATION_REQUIRED', 'COVERAGE_INPUT_REQUIRED'].includes(error?.code) ? 400 : error?.code === 'REQUEST_NOT_FOUND' ? 404 : 500;
++    return res.status(status).json({ code: error?.code || 'COVERAGE_INPUT_FAILED', message: error instanceof Error ? error.message : 'Unable to record coverage inputs.' });
++  }
++});
++
++app.post('/api/requests/:id/coverage-calculation', requireAuth, requirePermission(Permissions.POLICY_EVALUATE), async (req, res) => {
++  if (!storageFoundation.database || !storageFoundation.repositories?.coverage) return res.status(503).json({ message: 'Coverage calculation requires PostgreSQL.' });
++  try {
++    const request = (await storageFoundation.database.query('SELECT * FROM requests WHERE id = $1', [req.params.id])).rows[0];
++    if (!request || !requestIsPermittedForStaff(request, req.auth)) return res.status(404).json({ message: 'Request not found.' });
++    const result = await storageFoundation.repositories.coverage.calculateRequest({ requestId: request.id, actorId: req.auth.sub, justification: 'Authorized staff requested a reproducible coverage calculation.' });
++    return res.status(201).json(result);
++  } catch (error) {
++    const status = error?.code === 'REQUEST_NOT_FOUND' ? 404 : ['COVERAGE_INPUT_REQUIRED', 'COVERAGE_POLICY_NOT_FOUND', 'INVALID_COVERAGE_INPUT'].includes(error?.code) ? 409 : 500;
++    return res.status(status).json({ code: error?.code || 'COVERAGE_CALCULATION_FAILED', message: error instanceof Error ? error.message : 'Unable to calculate coverage.' });
++  }
++});
++
++app.get('/api/requests/:id/coverage-history', requireAuth, requirePermission(Permissions.REQUESTS_AUDIT), async (req, res) => {
++  if (!storageFoundation.database || !storageFoundation.repositories?.coverage) return res.status(503).json({ message: 'Coverage history requires PostgreSQL.' });
++  try {
++    const request = (await storageFoundation.database.query('SELECT * FROM requests WHERE id = $1', [req.params.id])).rows[0];
++    if (!request || !requestIsPermittedForStaff(request, req.auth)) return res.status(404).json({ message: 'Request not found.' });
++    return res.json(await storageFoundation.repositories.coverage.getRequestHistory({ requestId: request.id }));
++  } catch { return res.status(500).json({ message: 'Unable to load coverage calculation history.' }); }
++});
+*** End Patch

@@ -1,0 +1,393 @@
+
+
+PAGE CONTENT 6
+
+Project objectives 
+PROJECT CLOIE The Development of a System for Comprehensive Learning Outcomes and Instructional Evaluation 
+PROJECT OBJECTIVES 
+Proponents: Abbegail D. Abebon and Andy Zane B. Egut Project Stage: Beta Testing and User Validation Date: September 10, 2026 
+General objective 
+The general objective of Project CLOIE is to provide Assumption College of Davao with a centralized information system that manages learning-outcome evaluation context and stakeholder responses and transforms the collected evidence into role-appropriate analytics and reports for academic quality assurance and continuous improvement. 
+Specific objectives 
+1. OBJ-01. Academic and learning-outcome context Maintain the academic and learning-outcome context required for evaluation by managing relevant academic periods, programs, courses, course assignments, rosters, Institutional Learning Outcomes, Program Learning Outcomes, Course Intended Learning Outcomes, and approved outcome mappings. 
+2. OBJ-02. Stakeholder evaluation Support controlled administration of Assumption College of Davao's institutional evaluation instruments and enable eligible students, graduating students, alumni, and industry partners to complete the evaluation workflows applicable to them. 
+3. OBJ-03. Evaluation evidence and analytics Process collected quantitative ratings and qualitative feedback into traceable analytical evidence that authorized users can examine by relevant dimensions such as learning outcome, course, program, academic period, evaluation instrument, deployment, and stakeholder group where applicable. 
+4. OBJ-04. Dashboards and reporting Provide authorized academic personnel with dashboards and reports that consolidate relevant learning-outcome and stakeholder evaluation evidence for academic review, quality-assurance activities, continuous improvement, and accreditation preparation. 
+
+PAGE CONTENT 8
+
+5. OBJ-05. Security, privacy, and controlled access Protect evaluation and academic information through authenticated access, role and scope restrictions, controlled response handling, and confidentiality measures appropriate to each user's institutional responsibility. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+PAGE CONTENT 12
+
+User requirements checklist 
+PROJECT CLOIE The Development of a System for Comprehensive Learning Outcomes and Instructional Evaluation 
+Proponents: Abbegail D. Abebon and Andy Zane B. Egut System: System CLOIE Project Stage: Beta Testing and User Validation Date: September 10, 2026 
+Purpose 
+This checklist identifies the current user-facing requirements of System CLOIE for review during beta testing and user validation. Requirements are based on the present system scope and implemented workflows. A requirement should only be marked as verified after it has been demonstrated or tested successfully. Findings that require correction should be recorded and retested after the corresponding patch or revision. 
+Status guide: ☐ Verified  ☐ Needs Revision  ☐ Not Yet Tested  ☐ Not Applicable 
+A. Shared requirements for all applicable users 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-01 
+The user shall be able to authenticate using the authorized System CLOIE sign-in process. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-02 
+The system shall give the user access only to functions permitted by the user's assigned role and institutional scope. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-03 
+The system shall prevent unauthorized access to another program, course, evaluation, response, or administrative function. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+
+PAGE CONTENT 14
+
+UR-04 
+The system shall provide clear navigation appropriate to the user's role. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-05 
+The system shall provide understandable validation, error, empty-state, loading, and  
+confirmation feedback where applicable. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-06 
+The interface shall remain usable on supported desktop and mobile screen sizes. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-07 
+Evaluation and academic information shall be handled according to the confidentiality and privacy requirements of the user's role. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+B. Secretary 
+The current Secretary workspace covers users, school years, programs, courses, course assignments, and institutional baseline evaluation tools. The current dashboard also exposes account provisioning, academic-period management, roster management, and assignment oversight. 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-SEC-01 
+The Secretary shall be able to view a summary of the current academic and administrative state from the dashboard. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-SEC-02 
+The Secretary shall be able to create and maintain authorized System CLOIE user accounts and their institutional information. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-SEC-03 
+The Secretary shall be able to manage school years, academic periods, and applicable lifecycle information. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-SEC-04 
+The Secretary shall be able to manage the institutional program catalog. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+
+PAGE CONTENT 16
+
+UR-SEC-05 
+The Secretary shall be able to manage the institutional course catalog. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-SEC-06 
+The Secretary shall be able to manage or review course assignments across programs. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-SEC-07 
+The Secretary shall be able to manage student rosters associated with course assignments where authorized. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-SEC-08 
+The Secretary shall be able to maintain institutional baseline evaluation instruments used by authorized academic personnel. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+C. Program Head 
+The current Program Head workspace is program-scoped and contains Courses, Course Assignments, Outcomes, Tools, Responses, Analytics, and Reports. The selected program remains part of the user's context as they move between these areas. 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-PH-01 
+The Program Head shall be able to access a dashboard for the program or programs assigned to the user. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-02 
+The Program Head shall be able to review the courses associated with the selected program. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-03 
+The Program Head shall be able to review and manage authorized course assignments within the selected program. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-04 
+The Program Head shall be able to manage Program Learning Outcomes within the authorized program scope. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+
+PAGE CONTENT 18
+
+UR-PH-05 
+The Program Head shall be able to review and maintain applicable mappings between course-level and program-level learning outcomes. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-06 
+The Program Head shall be able to create or manage program-appropriate evaluation tools derived from approved institutional instruments where permitted. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-07 
+The Program Head shall be able to deploy applicable program-wide evaluations to eligible stakeholder groups. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-08 
+The Program Head shall be able to review authorized evaluation responses while respecting respondent confidentiality rules. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-09 
+The Program Head shall be able to examine quantitative and qualitative evidence through program-level analytics. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-10 
+The Program Head shall be able to examine how course-level evidence relates to the broader Program Learning Outcomes where mappings and evidence are available. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-11 
+The Program Head shall be able to access consolidated reports for academic review, quality assurance, and accreditation preparation. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-PH-12 
+The Program Head shall only see and manage information within the user's authorized program scope. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+ 
+
+PAGE CONTENT 20
+
+D. Faculty Member 
+The current Faculty workspace contains the dashboard, course rosters, CILO management, evaluation tools, analytics, and profile functions. 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-FAC-01 
+Faculty shall be able to view courses and course assignments relevant to their assigned teaching context. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-FAC-02 
+Faculty shall be able to review the student roster for an assigned course where authorized. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-FAC-03 
+Faculty shall be able to create and maintain Course Intended Learning Outcomes for their authorized courses. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-FAC-04 
+Faculty shall be able to review or maintain applicable CILO alignment information where the role is authorized to do so. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-FAC-05 
+Faculty shall be able to prepare evaluation tools for applicable course-level CILO evaluation activities. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-FAC-06 
+Faculty shall be able to publish or administer applicable course-bound evaluations to eligible students. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-FAC-07 
+Faculty shall be able to view analytics for authorized course-level evaluation evidence without exposing protected respondent identities. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+E. General Education Coordinator 
+The GenEd Coordinator is now a distinct role in the current application. Its workspace covers General Education courses, Institutional Learning Outcomes, CILO-to-ILO 
+
+PAGE CONTENT 22
+
+mappings, course assignments, and General Education analytics. The current dashboard explicitly identifies these as owned workflows. 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-GE-01 
+The GenEd Coordinator shall be able to review the current General Education context from the dashboard. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-GE-02 
+The GenEd Coordinator shall be able to create, edit, archive, or restore General Education courses within the authorized college-wide scope. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-GE-03 
+The GenEd Coordinator shall be able to maintain Institutional Learning Outcomes. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-GE-04 
+The GenEd Coordinator shall be able to review applicable CILO-to-ILO mappings for General Education courses. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-GE-05 
+The GenEd Coordinator shall be able to review and manage applicable General Education course assignments. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-GE-06 
+The GenEd Coordinator shall be able to view General Education evaluation evidence and analytics within the role's authorized scope. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+F. College Dean 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-DEAN-01 
+The Dean shall be able to view a college-wide dashboard summarizing evaluation activity, learning-outcome evidence, and 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+
+PAGE CONTENT 24
+
+key results across all programs within the College. 
+UR-DEAN-02 
+The Dean shall be able to view and compare analytics across programs, including program-level summaries, outcome results, stakeholder results, and other available evaluation indicators. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-DEAN-03 
+The Dean shall be able to drill down from college-wide summaries into a specific program, course, learning outcome, evaluation, or other supported analytical context. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-DEAN-04 
+The Dean shall be able to review consolidated reports and evaluation evidence across programs for academic oversight, quality assurance, continuous improvement, and accreditation preparation. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-DEAN-05 
+The Dean shall be able to review individual evaluation responses and, where the response is collected as identified, view the respondent's name and other role-authorized identifying information, with access comparable to the Program Head at the college-wide level. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+ 
+ 
+ 
+
+PAGE CONTENT 26
+
+G. Student 
+The current Student application has Dashboard, Evaluations, Submission History, and Profile workflows. 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-STU-01 
+Students shall be able to view evaluations currently assigned and available to them. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-STU-02 
+Students shall only be able to access evaluations for which they are eligible. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-STU-03 
+Students shall be able to complete quantitative and qualitative evaluation items provided by the assigned instrument. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-STU-04 
+Students shall be able to save supported evaluations in progress before final submission. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-STU-05 
+Students shall be able to review their responses before final submission where the workflow provides a review step. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-STU-06 
+The system shall prevent more than one finalized response for the same assigned evaluation where one-response enforcement applies. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-STU-07 
+A finalized response shall not be silently modified after submission. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-STU-08 
+Students shall be able to view appropriate submission history and confirmation information. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+
+PAGE CONTENT 28
+
+UR-STU-09 
+Student evaluation responses shall follow the required anonymity and confidentiality rules when reviewed by academic personnel. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+H. Alumni / Graduate 
+The current Alumni portal provides Dashboard, Evaluations, Submission History, and Profile areas. 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-ALU-01 
+Alumni shall be able to access the system through the appropriate alumni account and verification workflow. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-ALU-02 
+Alumni shall be able to see only the evaluation activities assigned to or applicable to them. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-ALU-03 
+Alumni shall be able to complete the quantitative and qualitative items contained in the assigned evaluation instrument. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-ALU-04 
+Alumni shall be able to review and submit their responses through the applicable evaluation workflow. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-ALU-05 
+Alumni shall be able to view appropriate submission history and confirmation information. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+ 
+ 
+ 
+
+PAGE CONTENT 30
+
+I. Industry Partner / Employer 
+The Industry Partner portal follows the same broad respondent structure, with Dashboard, Evaluations, Submission History, and Profile areas. 
+ID 
+User requirement 
+Verification status 
+Remarks 
+UR-IND-01 
+Industry Partners shall be able to access the system through the appropriate account and verification workflow. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-IND-02 
+Industry Partners shall only be able to access evaluation activities assigned to or applicable to them. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-IND-03 
+Industry Partners shall be able to evaluate the applicable outcomes, competencies, or attributes represented by the assigned instrument. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-IND-04 
+Industry Partners shall be able to provide applicable quantitative ratings and qualitative feedback. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-IND-05 
+Industry Partners shall be able to review and submit their responses through the applicable evaluation workflow. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+UR-IND-06 
+Industry Partners shall be able to view appropriate submission history and confirmation information. 
+☐ Verified ☐ Needs Revision ☐ Not Yet Tested 
+ 
+ 
+ 

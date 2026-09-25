@@ -1,0 +1,65 @@
+*** Begin Patch
+*** Update File: server/storage/postgresRepositories.js
+@@
+ import { budgetAvailability, guaranteeLetterExpiry, validateBudgetPool } from '../services/budgetAllocationService.js';
++import { applySubmissionRollout, validatePolicyRolloutConfiguration } from '../services/policyRolloutService.js';
+@@
+       if (gateResult.outcome === SubmissionGateOutcome.PASSED && applicableBudget) {
+         const budget = budgetAvailability(applicableBudget);
+         if (!budget.allowed) gateResult = { ...gateResult, outcome: SubmissionGateOutcome.BLOCKED, reasonCodes: [...gateResult.reasonCodes, 'BUDGET_DEPLETED'], findings: [...gateResult.findings, { code: 'BUDGET_DEPLETED', message: 'The city budget for this assistance type is temporarily depleted. Contact the LINGAP help desk or submit after a new budget period is opened.', field: 'assistanceType', budgetPoolId: applicableBudget.id }], budget: { poolId: applicableBudget.id, available: budget.available, depletionThreshold: budget.threshold } };
+       }
++      const rolloutPolicy = (await client.query(`
++        SELECT * FROM policy_configurations
++        WHERE policy_key = 'policy_rollout' AND active = true
++          AND (assistance_type IS NULL OR assistance_type = $1)
++          AND effective_from <= $2 AND (effective_until IS NULL OR effective_until > $2)
++        ORDER BY (assistance_type IS NOT NULL) DESC, version DESC LIMIT 1
++      `, [input.assistanceType, input.now || new Date()])).rows[0] || null;
++      gateResult = applySubmissionRollout(gateResult, rolloutPolicy?.configuration);
+@@
+           policy_version_id, policy_version, outcome, reason_codes, findings,
+-          required_reviews, cooldown_end_date, input_snapshot, evaluator_version, evaluated_at
+-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
++          required_reviews, cooldown_end_date, input_snapshot, evaluator_version, evaluated_at,
++          raw_outcome, enforcement_mode, enforced_reason_codes, report_only_reason_codes, rollout_snapshot
++        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23)
+@@
+-        inputSnapshot, gateResult.evaluatorVersion, gateResult.evaluatedAt]);
++        inputSnapshot, gateResult.evaluatorVersion, gateResult.evaluatedAt,
++        gateResult.rawOutcome, gateResult.enforcementMode, JSON.stringify(gateResult.enforcedReasonCodes),
++        JSON.stringify(gateResult.reportOnlyReasonCodes), gateResult.rolloutSnapshot]);
+@@
+-        newValue: { outcome: gateResult.outcome, reasonCodes: gateResult.reasonCodes,
++        newValue: { outcome: gateResult.outcome, rawOutcome: gateResult.rawOutcome, reasonCodes: gateResult.reasonCodes,
++          enforcedReasonCodes: gateResult.enforcedReasonCodes, reportOnlyReasonCodes: gateResult.reportOnlyReasonCodes,
+           existingRequestReference: gateResult.existingRequestReference, cooldownEndDate: gateResult.cooldownEndDate,
+-          originatingOfficeId: officeId, policyVersion: policy?.policy_version || null },
++          originatingOfficeId: officeId, policyVersion: policy?.policy_version || null,
++          rolloutPolicyVersion: rolloutPolicy?.policy_version || null },
+@@
+         JSON.stringify(gateResult.requiredReviews), {
+           stage: 'submission_policy_gates', outcome: gateResult.outcome,
++          rawOutcome: gateResult.rawOutcome,
++          reportOnlyReasonCodes: gateResult.reportOnlyReasonCodes,
++          enforcedReasonCodes: gateResult.enforcedReasonCodes,
++          rolloutPolicyVersion: rolloutPolicy?.policy_version || null,
++          rolloutSnapshot: gateResult.rolloutSnapshot,
+           policyVersion: policy?.policy_version || null, findings: gateResult.findings,
+@@
+       const previous = previousResult.rows[0] || null;
++      const configuration = input.policyKey === 'policy_rollout'
++        ? validatePolicyRolloutConfiguration(input.configuration, previous?.configuration)
++        : input.configuration;
+@@
+-      `, [policyId, input.policyKey, version, policyVersion, input.assistanceType || null, input.configuration,
++      `, [policyId, input.policyKey, version, policyVersion, input.assistanceType || null, configuration,
+@@
+         hard_disqualifiers: 'hard_rejection_policy_version_published',
++        policy_rollout: 'policy_rollout_version_published',
+@@
+-        newValue: { policyKey: input.policyKey, version, policyVersion, assistanceType: input.assistanceType || null, configuration: input.configuration, effectiveDate },
++        newValue: { policyKey: input.policyKey, version, policyVersion, assistanceType: input.assistanceType || null, configuration, effectiveDate },
+@@
+-        oldValue: previous?.configuration || null, newValue: input.configuration,
++        oldValue: previous?.configuration || null, newValue: configuration,
+*** End Patch

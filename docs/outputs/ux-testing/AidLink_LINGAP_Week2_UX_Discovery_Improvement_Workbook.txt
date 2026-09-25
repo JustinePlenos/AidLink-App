@@ -1,0 +1,722 @@
+USER EXPERIENCE DISCOVERY & IMPROVEMENT REPORT
+Week 2 testing workbook | ITE 4 – Web Systems and Technologies 2
+Project details
+Complete before testing
+Capstone title
+AidLink: LINGAP Applicant App and Web Administration System
+Replace with your approved capstone title if different.
+Name / Group; Section / Block
+______________________________________________________
+Instructor; Date submitted
+______________________________________________________
+Testing date(s); Facilitator / Observer
+______________________________________________________
+App build; Website version / commit
+______________________________________________________
+Phone / OS; Browser / version; Screen size
+______________________________________________________
+Test server address; Network used
+______________________________________________________
+
+Purpose and use
+Use this workbook during real sessions, then document patterns, priorities, implemented fixes and a second user check. It preserves the teacher’s six report parts and three appendices. Five blank participant records are included; duplicate them for additional participants.
+Use M1–M4 for applicant users and W1–W4 for staff users from the companion Week 1 workbook. Select a realistic task set before the session and record any changes. Collect successes as well as difficulties. Do not treat expected outcomes as observed results.
+Recording rules
+Use participant codes P01–P10 throughout. Obtain consent first using Appendix A. Record the exact task IDs, build, device and evidence references. Use quotation marks only for the participant’s actual words; identify paraphrases. Leave results blank until observed.
+Outcome: I = independent; A = completed with help; F = incomplete; N = not attempted. Start timing after the scenario is read. Log hints and elapsed time; exclude N from completion calculations. Do not turn this small study into a claim about all LINGAP users.
+Before/after screenshots, priorities and reflections are intentionally unfilled. Add only actual findings and changes. Participant evidence should use fictional application data and omit faces/personal information unless specifically permitted.
+
+
+[PAGE BREAK]
+
+PART 1: OBSERVATION RECORD #1
+P01 | Suggested role: Applicant — record actual role below
+Session details
+Complete during the session
+Participant (role/type)
+Code: P01   Actual role: _________________________________
+Relevant app/computer experience: ____________________________
+Session / consent
+Date: __________  Start: ________  End: ________
+Facilitator: __________  Consent/evidence preference: __________
+System / device / version
+App / Web: ________  Device / browser: _______________________
+Build: ______________  Network: _____________________________
+
+Task given and outcome log
+Use Week 1 scenarios. Enter the task ID and any wording change. I / A / F / N: independent / assisted / incomplete / not attempted. Ease is optional: 1 = very difficult, 5 = very easy.
+Task ID / wording change
+Outcome
+Time (sec)
+Hints / errors
+Ease 1–5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Observed actions / behavior — include successful actions and sequence
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+Difficulties noted — where, what happened, and effect on the task (or “none observed”)
+________________________________________________________________________________
+________________________________________________________________________________
+Direct quotes / comments — exact words, or label as a paraphrase
+________________________________________________________________________________
+________________________________________________________________________________
+Suggestions given by participant — keep separate from the team’s proposed fix
+________________________________________________________________________________
+________________________________________________________________________________
+Evidence IDs / filenames: _______________________  Related issue IDs: ____________________
+
+
+[PAGE BREAK]
+
+PART 1: OBSERVATION RECORD #2
+P02 | Suggested role: Applicant — record actual role below
+Session details
+Complete during the session
+Participant (role/type)
+Code: P02   Actual role: _________________________________
+Relevant app/computer experience: ____________________________
+Session / consent
+Date: __________  Start: ________  End: ________
+Facilitator: __________  Consent/evidence preference: __________
+System / device / version
+App / Web: ________  Device / browser: _______________________
+Build: ______________  Network: _____________________________
+
+Task given and outcome log
+Use Week 1 scenarios. Enter the task ID and any wording change. I / A / F / N: independent / assisted / incomplete / not attempted. Ease is optional: 1 = very difficult, 5 = very easy.
+Task ID / wording change
+Outcome
+Time (sec)
+Hints / errors
+Ease 1–5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Observed actions / behavior — include successful actions and sequence
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+Difficulties noted — where, what happened, and effect on the task (or “none observed”)
+________________________________________________________________________________
+________________________________________________________________________________
+Direct quotes / comments — exact words, or label as a paraphrase
+________________________________________________________________________________
+________________________________________________________________________________
+Suggestions given by participant — keep separate from the team’s proposed fix
+________________________________________________________________________________
+________________________________________________________________________________
+Evidence IDs / filenames: _______________________  Related issue IDs: ____________________
+
+
+[PAGE BREAK]
+
+PART 1: OBSERVATION RECORD #3
+P03 | Suggested role: Applicant — record actual role below
+Session details
+Complete during the session
+Participant (role/type)
+Code: P03   Actual role: _________________________________
+Relevant app/computer experience: ____________________________
+Session / consent
+Date: __________  Start: ________  End: ________
+Facilitator: __________  Consent/evidence preference: __________
+System / device / version
+App / Web: ________  Device / browser: _______________________
+Build: ______________  Network: _____________________________
+
+Task given and outcome log
+Use Week 1 scenarios. Enter the task ID and any wording change. I / A / F / N: independent / assisted / incomplete / not attempted. Ease is optional: 1 = very difficult, 5 = very easy.
+Task ID / wording change
+Outcome
+Time (sec)
+Hints / errors
+Ease 1–5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Observed actions / behavior — include successful actions and sequence
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+Difficulties noted — where, what happened, and effect on the task (or “none observed”)
+________________________________________________________________________________
+________________________________________________________________________________
+Direct quotes / comments — exact words, or label as a paraphrase
+________________________________________________________________________________
+________________________________________________________________________________
+Suggestions given by participant — keep separate from the team’s proposed fix
+________________________________________________________________________________
+________________________________________________________________________________
+Evidence IDs / filenames: _______________________  Related issue IDs: ____________________
+
+
+[PAGE BREAK]
+
+PART 1: OBSERVATION RECORD #4
+P04 | Suggested role: Staff reviewer — record actual role below
+Session details
+Complete during the session
+Participant (role/type)
+Code: P04   Actual role: _________________________________
+Relevant app/computer experience: ____________________________
+Session / consent
+Date: __________  Start: ________  End: ________
+Facilitator: __________  Consent/evidence preference: __________
+System / device / version
+App / Web: ________  Device / browser: _______________________
+Build: ______________  Network: _____________________________
+
+Task given and outcome log
+Use Week 1 scenarios. Enter the task ID and any wording change. I / A / F / N: independent / assisted / incomplete / not attempted. Ease is optional: 1 = very difficult, 5 = very easy.
+Task ID / wording change
+Outcome
+Time (sec)
+Hints / errors
+Ease 1–5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Observed actions / behavior — include successful actions and sequence
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+Difficulties noted — where, what happened, and effect on the task (or “none observed”)
+________________________________________________________________________________
+________________________________________________________________________________
+Direct quotes / comments — exact words, or label as a paraphrase
+________________________________________________________________________________
+________________________________________________________________________________
+Suggestions given by participant — keep separate from the team’s proposed fix
+________________________________________________________________________________
+________________________________________________________________________________
+Evidence IDs / filenames: _______________________  Related issue IDs: ____________________
+
+
+[PAGE BREAK]
+
+PART 1: OBSERVATION RECORD #5
+P05 | Suggested role: Staff reviewer — record actual role below
+Session details
+Complete during the session
+Participant (role/type)
+Code: P05   Actual role: _________________________________
+Relevant app/computer experience: ____________________________
+Session / consent
+Date: __________  Start: ________  End: ________
+Facilitator: __________  Consent/evidence preference: __________
+System / device / version
+App / Web: ________  Device / browser: _______________________
+Build: ______________  Network: _____________________________
+
+Task given and outcome log
+Use Week 1 scenarios. Enter the task ID and any wording change. I / A / F / N: independent / assisted / incomplete / not attempted. Ease is optional: 1 = very difficult, 5 = very easy.
+Task ID / wording change
+Outcome
+Time (sec)
+Hints / errors
+Ease 1–5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Observed actions / behavior — include successful actions and sequence
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+Difficulties noted — where, what happened, and effect on the task (or “none observed”)
+________________________________________________________________________________
+________________________________________________________________________________
+Direct quotes / comments — exact words, or label as a paraphrase
+________________________________________________________________________________
+________________________________________________________________________________
+Suggestions given by participant — keep separate from the team’s proposed fix
+________________________________________________________________________________
+________________________________________________________________________________
+Evidence IDs / filenames: _______________________  Related issue IDs: ____________________
+
+
+[PAGE BREAK]
+
+PART 2: FINDINGS (PATTERNS ACROSS USERS)
+Summarize both successful patterns and repeated difficulties.
+Group observations by task and user role. For each pattern, count only people who attempted the relevant task. Report n/N (for example, 2/3), participant codes and evidence references; do not combine unrelated app and staff tasks into one denominator.
+Observation insights
+Users who experienced it (n/N)
+Notes / participant and evidence IDs
+Pattern / task / app or web:
+
+Success or difficulty:
+
+
+Pattern / task / app or web:
+
+Success or difficulty:
+
+
+Pattern / task / app or web:
+
+Success or difficulty:
+
+
+Pattern / task / app or web:
+
+Success or difficulty:
+
+
+Pattern / task / app or web:
+
+Success or difficulty:
+
+
+Pattern / task / app or web:
+
+Success or difficulty:
+
+
+
+Task outcome summary
+Task / role
+Attempted (I+A+F)
+Independent (I)
+Assisted (A)
+Incomplete (F)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Independent completion rate = I ÷ (I+A+F) × 100. Report the counts with any percentage. Summarize time only when tasks and completion conditions are comparable; flag interrupted or assisted runs.
+What worked well and should be retained?
+________________________________________________________________________________
+________________________________________________________________________________
+
+
+[PAGE BREAK]
+
+PART 3: PRIORITIZED ISSUES
+Use the teacher’s Impact × Frequency framework.
+Impact: High = blocks a core task, causes an incorrect request/decision, or prevents access to needed information. Low = recoverable friction with limited effect. Frequency: record n/N for relevant task attempts, then apply your class definition of High or Low.
+If the lecture notes do not specify a frequency threshold, use this proposed study convention and label it: High = at least half of relevant participants; Low = fewer than half. Confirm this convention against the lecture notes before submission.
+Order high-impact/high-frequency issues first, then high-impact/low-frequency, low-impact/high-frequency, and low-impact/low-frequency. Use evidence and implementation dependencies to explain ties. Keep a serious isolated issue visible even when frequency is low.
+Issue / evidence IDs
+Impact H/L
+Frequency H/L; n/N
+Priority rank
+Planned fix
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Rationale for top priority / ties
+________________________________________________________________________________
+________________________________________________________________________________
+Fix owner: ____________________  Target build / date: ____________________
+Deferred issues and reason
+________________________________________________________________________________
+________________________________________________________________________________
+
+
+[PAGE BREAK]
+
+PART 4: BEFORE / AFTER EVIDENCE — FIX 1
+Duplicate this page for each additional implemented improvement.
+Change details
+Complete after implementation
+Issue fixed / priority
+Issue ID: __________  Task / screen: _________________________
+Pattern / participant evidence: ______________________________
+Change and intended benefit
+________________________________________________________
+________________________________________________________
+Implementation reference
+Owner: ___________________  Date: ________________________
+Before build: ______________  After build / commit: ___________
+
+Before screenshot
+After screenshot
+[Paste actual screenshot before the fix]
+[Paste actual screenshot after the fix]
+
+Before caption / date / evidence ID
+After caption / date / evidence ID
+______________________________________
+______________________________________
+______________________________________
+______________________________________
+
+Use the same task and comparable screen state/viewport. Mask personal data. If a change is behavioral, attach the relevant sequence or recording reference instead of relying on a static image.
+How the change addresses the observed user impact
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+
+
+[PAGE BREAK]
+
+PART 4: BEFORE / AFTER EVIDENCE — FIX 2
+Duplicate this page for each additional implemented improvement.
+Change details
+Complete after implementation
+Issue fixed / priority
+Issue ID: __________  Task / screen: _________________________
+Pattern / participant evidence: ______________________________
+Change and intended benefit
+________________________________________________________
+________________________________________________________
+Implementation reference
+Owner: ___________________  Date: ________________________
+Before build: ______________  After build / commit: ___________
+
+Before screenshot
+After screenshot
+[Paste actual screenshot before the fix]
+[Paste actual screenshot after the fix]
+
+Before caption / date / evidence ID
+After caption / date / evidence ID
+______________________________________
+______________________________________
+______________________________________
+______________________________________
+
+Use the same task and comparable screen state/viewport. Mask personal data. If a change is behavioral, attach the relevant sequence or recording reference instead of relying on a static image.
+How the change addresses the observed user impact
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+
+
+[PAGE BREAK]
+
+PART 5: SECOND USER CHECK (VERIFICATION)
+Repeat the affected task after the fix; do not assume a visual change resolved the problem.
+Verification record 1
+Verification item
+Observed result
+Participant (same or different)
+Code / role: __________  Same / different: __________
+New consent/attendance entry, if needed: _______________________
+Issue / task / test conditions
+Issue: __________  Task: __________  Date: __________________
+Build / device: ___________________________________________
+Outcome and comparison
+Before I/A/F: _____  After I/A/F: _____  Hints before/after: ______
+Time before/after: __________  Conditions changed: ____________
+Was the fix effective?
+Yes / No / Partially: __________
+Notes / evidence: _________________________________________
+Remaining difficulty / next action
+________________________________________________________
+
+Verification record 2
+Verification item
+Observed result
+Participant (same or different)
+Code / role: __________  Same / different: __________
+New consent/attendance entry, if needed: _______________________
+Issue / task / test conditions
+Issue: __________  Task: __________  Date: __________________
+Build / device: ___________________________________________
+Outcome and comparison
+Before I/A/F: _____  After I/A/F: _____  Hints before/after: ______
+Time before/after: __________  Conditions changed: ____________
+Was the fix effective?
+Yes / No / Partially: __________
+Notes / evidence: _________________________________________
+Remaining difficulty / next action
+________________________________________________________
+
+Check the original failure and nearby behavior. A different participant or prior familiarity can affect the comparison; record that limitation. If the issue persists, revise its status and plan another check.
+
+
+[PAGE BREAK]
+
+PART 6: REFLECTION
+Complete after observation, improvements and verification.
+1. What did you realize about your assumptions as a developer after the user observation?
+Connect an assumption about applicants or staff to a specific task, participant code and observed result.
+Response
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+2. What was the biggest surprise you learned from the real users?
+Include a success or difficulty and explain why it changed your understanding of the LINGAP workflow.
+Response
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+3. What will you do differently in your next project/capstone iteration?
+State a concrete change to design, testing or implementation and how you will check its effect.
+Response
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+
+
+[PAGE BREAK]
+
+APPENDIX A: PARTICIPANT CONSENT & ATTENDANCE
+Obtain consent before each session; duplicate for additional participants or retests.
+Purpose: evaluate how easily people can use the AidLink applicant app and LINGAP web system for a capstone class. The session uses fictional records and takes approximately 25–35 minutes. Participation is voluntary; a participant may skip questions, pause or stop without penalty.
+The team will take task notes using a participant code. Screenshots/photos are optional and may be used as class evidence only with permission. Avoid recording faces or personal details. Agree to any additional recording separately.
+Team contact: _________________________  Who may view the evidence: ____________________
+Storage location / access: _____________________  Planned deletion date: __________________
+Complete and explain the information above before requesting a signature. If a participant declines images, take notes only and mark “not captured—consent declined” in Appendix B.
+Participant statement: I understand the activity and voluntarily agree to take part. My screenshot/photo preference is recorded below. I understand I may stop at any time.
+Code
+Name / initials
+Signature
+Date
+Start
+End
+P01
+
+
+
+
+
+P02
+
+
+
+
+
+P03
+
+
+
+
+
+P04
+
+
+
+
+
+P05
+
+
+
+
+
+
+Code
+Screenshot/photo consent (Yes / No)
+Notes / retest session date
+P01
+
+
+P02
+
+
+P03
+
+
+P04
+
+
+P05
+
+
+
+Use codes in the report body. Keep this attendance page separate from public copies. For additional/retest participants, duplicate a row and link it to the corresponding observation record.
+
+
+[PAGE BREAK]
+
+APPENDIX B: SESSION EVIDENCE
+P01–P03 | Attach consented session evidence; duplicate pages if needed.
+Participant P01: insert screenshot / photo
+Evidence details
+[Paste actual session screenshot or photo here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+Participant P02: insert screenshot / photo
+Evidence details
+[Paste actual session screenshot or photo here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+Participant P03: insert screenshot / photo
+Evidence details
+[Paste actual session screenshot or photo here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+Show the task being performed, not just a posed photo. Reference the matching observation record. When no image is permitted, document the reason and link the written session notes.
+
+
+[PAGE BREAK]
+
+APPENDIX B: SESSION EVIDENCE (continued)
+P04–P05
+Participant P04: insert screenshot / photo
+Evidence details
+[Paste actual session screenshot or photo here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+Participant P05: insert screenshot / photo
+Evidence details
+[Paste actual session screenshot or photo here]
+Evidence ID: __________________
+Caption / task: _________________
+Date / time: ___________________
+App / web version: ______________
+Remove personal details before sharing.
+
+APPENDIX C: CERTIFICATION OF AUTHENTICITY
+We certify that the observation sessions described in this report were personally conducted with the participants listed in Appendix A, and that the before/after evidence reflects actual changes made to our Capstone application.
+Printed name: __________________________________  Signature: _________________________
+Printed name: __________________________________  Signature: _________________________
+Date signed: ____________________
+Sign only after completing the reported activities. Add signature lines for other group members as needed.
+Before submitting
+Check that observation records, issue IDs, participant counts, screenshot captions and retest results agree. Remove unused placeholders or mark them clearly. Include unresolved issues and actual study limitations.
+Adapted from Week2_UX_Discovery_Improvement_Report.docx. Task details are based on the local AidLink app and web source. No participant results, test passes or completed fixes were supplied or invented.

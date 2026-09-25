@@ -1,0 +1,92 @@
+*** Begin Patch
+*** Update File: server/storage/repositoryContracts.js
+@@
+ export class WorkflowEvaluationRepository {
+   async evaluateRequest(_input) { throw new Error('evaluateRequest must be implemented.'); }
+   async confirmEvaluation(_input) { throw new Error('confirmEvaluation must be implemented.'); }
+   async validateForApproval(_input) { throw new Error('validateForApproval must be implemented.'); }
+   async getRequestHistory(_input) { throw new Error('getRequestHistory must be implemented.'); }
++  async recordDecisionComparison(_input) { throw new Error('recordDecisionComparison must be implemented.'); }
++  async listDecisionComparisons(_input) { throw new Error('listDecisionComparisons must be implemented.'); }
+ }
+*** Update File: server/storage/workflowRepository.js
+@@
+ import { calculateCoverageMatrix } from '../services/coverageMatrixService.js';
++import { normalizePolicyRollout, rolloutMode, rolloutRuleForReasonCode, PolicyRolloutMode } from '../services/policyRolloutService.js';
+@@
+-      const policies = (await client.query(`SELECT DISTINCT ON (policy_key) * FROM policy_configurations WHERE policy_key IN ('hard_disqualifiers','coverage_matrix') AND active=true AND effective_from<=now() AND (effective_until IS NULL OR effective_until>now()) AND (assistance_type IS NULL OR assistance_type=$1) ORDER BY policy_key,(assistance_type IS NOT NULL) DESC,version DESC`, [request.assistance_type])).rows;
++      const policies = (await client.query(`SELECT DISTINCT ON (policy_key) * FROM policy_configurations WHERE policy_key IN ('hard_disqualifiers','coverage_matrix','policy_rollout') AND active=true AND effective_from<=now() AND (effective_until IS NULL OR effective_until>now()) AND (assistance_type IS NULL OR assistance_type=$1) ORDER BY policy_key,(assistance_type IS NOT NULL) DESC,version DESC`, [request.assistance_type])).rows;
+       const hardPolicy = policies.find((item) => item.policy_key === 'hard_disqualifiers') || null;
+       const coveragePolicy = policies.find((item) => item.policy_key === 'coverage_matrix') || null;
++      const rolloutPolicy = policies.find((item) => item.policy_key === 'policy_rollout') || null;
++      const rollout = normalizePolicyRollout(rolloutPolicy?.configuration);
+@@
+-      const flags = [];
+-      if (!['clear', 'exception_applied'].includes(hardOutcome)) flags.push({ code: 'WORKFLOW_EVIDENCE_REVIEW_REQUIRED', message: 'Hard-disqualifier evidence requires human review.' });
+-      if (!coverage.calculationEnabled || coverage.outcome === 'ineligible') flags.push({ code: 'WORKFLOW_COVERAGE_CONFIRMATION_REQUIRED', message: 'Coverage is not ready for confirmation.' });
+-      if (documents.some((item) => ['manual_review', 'review_required'].includes(item.analysis_outcome))) flags.push({ code: 'WORKFLOW_EVIDENCE_REVIEW_REQUIRED', message: 'A document-quality result requires human review.' });
+-      if (request.partner_pricing_status === 'locked') flags.push({ code: 'WORKFLOW_EVIDENCE_REVIEW_REQUIRED', message: 'Partner pricing remains locked pending validation.' });
+-      const findings = [...hard.findings, ...flags];
+-      const reasonCodes = [...new Set([...hard.reasonCodes, ...(coverage.reasonCodes || []), ...flags.map((item) => item.code)])];
++      const flags = [];
++      if (!['clear', 'exception_applied'].includes(hardOutcome)) flags.push({ code: 'WORKFLOW_EVIDENCE_REVIEW_REQUIRED', message: 'Hard-disqualifier evidence requires human review.', rolloutRule: 'hard_rejections' });
++      if (!coverage.calculationEnabled || coverage.outcome === 'ineligible') {
++        const payerFinding = (coverage.reasonCodes || []).some((code) => rolloutRuleForReasonCode(code) === 'payer_deductions');
++        flags.push({ code: 'WORKFLOW_COVERAGE_CONFIRMATION_REQUIRED', message: 'Coverage is not ready for confirmation.', rolloutRule: payerFinding ? 'payer_deductions' : 'coverage_reductions' });
++      }
++      if (documents.some((item) => ['manual_review', 'review_required'].includes(item.analysis_outcome))) flags.push({ code: 'WORKFLOW_EVIDENCE_REVIEW_REQUIRED', message: 'A document-quality result requires human review.' });
++      if (request.partner_pricing_status === 'locked') flags.push({ code: 'WORKFLOW_EVIDENCE_REVIEW_REQUIRED', message: 'Partner pricing remains locked pending validation.', rolloutRule: 'facility_directory' });
++      const enforcedFlags = flags.filter((item) => !item.rolloutRule || rolloutMode(rollout, item.rolloutRule) === PolicyRolloutMode.ENABLED);
++      const reportOnlyFlags = flags.filter((item) => item.rolloutRule && rolloutMode(rollout, item.rolloutRule) !== PolicyRolloutMode.ENABLED);
++      const findings = [...hard.findings, ...flags];
++      const reasonCodes = [...new Set([...hard.reasonCodes, ...(coverage.reasonCodes || []), ...flags.map((item) => item.code)])];
++      const reportOnlyReasonCodes = [...new Set([
++        ...hard.reasonCodes.filter((code) => rolloutMode(rollout, rolloutRuleForReasonCode(code) || 'hard_rejections') !== PolicyRolloutMode.ENABLED),
++        ...(coverage.reasonCodes || []).filter((code) => {
++          const rule = rolloutRuleForReasonCode(code) || 'coverage_reductions';
++          return rolloutMode(rollout, rule) !== PolicyRolloutMode.ENABLED;
++        }),
++        ...reportOnlyFlags.map((item) => item.code),
++      ])];
++      const enforcedReasonCodes = reasonCodes.filter((code) => !reportOnlyReasonCodes.includes(code));
+@@
+-      const outcome = flags.length ? 'human_review_required' : 'ready_for_decision';
++      const outcome = enforcedFlags.length ? 'human_review_required' : 'ready_for_decision';
+       const evaluationId = input.id || id('workflow-evaluation');
+-      const policyVersion = { hardDisqualifiers: hardPolicy?.policy_version || null, coverageMatrix: coveragePolicy?.policy_version || null };
+-      await client.query(`INSERT INTO workflow_policy_evaluations (id,request_id,outcome,findings,required_evidence,coverage,reason_codes,policy_versions,human_review_flags,input_fingerprint,evaluator_version,remarks,evaluated_by) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'staff-workflow-1',$11,$12)`, [evaluationId, request.id, outcome, JSON.stringify(findings), JSON.stringify(requiredEvidence), JSON.stringify(coverage), JSON.stringify(reasonCodes), JSON.stringify(policyVersion), JSON.stringify(flags), inputFingerprint, remarks, input.actorId]);
++      const policyVersion = { hardDisqualifiers: hardPolicy?.policy_version || null, coverageMatrix: coveragePolicy?.policy_version || null, rollout: rolloutPolicy?.policy_version || null };
++      await client.query(`INSERT INTO workflow_policy_evaluations (id,request_id,outcome,findings,required_evidence,coverage,reason_codes,policy_versions,human_review_flags,input_fingerprint,evaluator_version,remarks,evaluated_by,rollout_snapshot,enforced_reason_codes,report_only_reason_codes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'staff-workflow-2',$11,$12,$13,$14,$15)`, [evaluationId, request.id, outcome, JSON.stringify(findings), JSON.stringify(requiredEvidence), JSON.stringify(coverage), JSON.stringify(reasonCodes), JSON.stringify(policyVersion), JSON.stringify(enforcedFlags), inputFingerprint, remarks, input.actorId, rollout, JSON.stringify(enforcedReasonCodes), JSON.stringify(reportOnlyReasonCodes)]);
+@@
+-      await audit(client, { actorId: input.actorId, action: input.approvalCheck ? 'workflow_policy_reevaluated' : 'workflow_policy_evaluated', type: 'workflow_policy_evaluation', recordId: evaluationId, value: { requestId: request.id, outcome, reasonCodes, policyVersion, inputFingerprint }, justification: remarks });
+-      return { evaluationId, requestId: request.id, outcome, findings, requiredEvidence, coverage, reasonCodes, policyVersion, humanReviewFlags: flags, humanReviewRequired: flags.length > 0, inputFingerprint };
++      await audit(client, { actorId: input.actorId, action: input.approvalCheck ? 'workflow_policy_reevaluated' : 'workflow_policy_evaluated', type: 'workflow_policy_evaluation', recordId: evaluationId, value: { requestId: request.id, outcome, reasonCodes, enforcedReasonCodes, reportOnlyReasonCodes, policyVersion, inputFingerprint }, justification: remarks });
++      return { evaluationId, requestId: request.id, outcome, findings, requiredEvidence, coverage, reasonCodes, enforcedReasonCodes, reportOnlyReasonCodes, rolloutSnapshot: rollout, policyVersion, humanReviewFlags: enforcedFlags, reportOnlyFlags, humanReviewRequired: enforcedFlags.length > 0, inputFingerprint };
+@@
+   async getRequestHistory({ requestId }) {
+@@
+     return { evaluations: evaluations.rows, confirmations: confirmations.rows };
+   }
++
++  async recordDecisionComparison({ requestId, actorId, staffDecision }) {
++    if (!['approved', 'denied'].includes(staffDecision)) throw new Error('A final staff decision is required for report-only comparison.');
++    return this.database.withTransaction(async (client) => {
++      const evaluation = (await client.query('SELECT * FROM workflow_policy_evaluations WHERE request_id=$1 ORDER BY evaluated_at DESC LIMIT 1', [requestId])).rows[0];
++      if (!evaluation) return null;
++      const coverage = evaluation.coverage || {};
++      const reasons = Array.isArray(evaluation.reason_codes) ? evaluation.reason_codes : [];
++      const predictedDecision = coverage.outcome === 'ineligible' || reasons.some((code) => rolloutRuleForReasonCode(code) === 'hard_rejections') ? 'deny_or_review' : 'approve';
++      const matched = (predictedDecision === 'approve' && staffDecision === 'approved') || (predictedDecision === 'deny_or_review' && staffDecision === 'denied');
++      const comparisonId = id('policy-comparison');
++      await client.query(`INSERT INTO policy_decision_comparisons (id,request_id,workflow_evaluation_id,predicted_decision,staff_decision,matched,reason_codes,rollout_snapshot,actor_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`, [comparisonId, requestId, evaluation.id, predictedDecision, staffDecision, matched, JSON.stringify(reasons), evaluation.rollout_snapshot || {}, actorId]);
++      await audit(client, { actorId, action: 'policy_report_only_decision_compared', type: 'policy_decision_comparison', recordId: comparisonId, value: { requestId, predictedDecision, staffDecision, matched, reasonCodes: reasons }, justification: 'Compare report-only policy output with the Case Worker decision.' });
++      return { id: comparisonId, requestId, predictedDecision, staffDecision, matched };
++    });
++  }
++
++  async listDecisionComparisons({ limit = 100 } = {}) {
++    const result = await this.database.query('SELECT * FROM policy_decision_comparisons ORDER BY compared_at DESC LIMIT $1', [Math.min(500, Math.max(1, Number(limit) || 100))]);
++    return result.rows;
++  }
+ }
+*** End Patch

@@ -1,0 +1,135 @@
+*** Begin Patch
+*** Update File: server/storage/repositoryContracts.js
+@@
+ export class HardDisqualifierRepository {
+@@
+ }
++
++export class CoverageMatrixRepository {
++  async recordVerifiedInput(_input) { throw new Error('recordVerifiedInput must be implemented.'); }
++  async calculateRequest(_input) { throw new Error('calculateRequest must be implemented.'); }
++  async getRequestHistory(_input) { throw new Error('getRequestHistory must be implemented.'); }
++}
+*** Update File: server/storage/postgresRepositories.js
+@@
+-import { AidLinkRepository, FacilityRoutingRepository, HardDisqualifierRepository, PolicyRepository, UnitOfWork } from './repositoryContracts.js';
++import { AidLinkRepository, CoverageMatrixRepository, FacilityRoutingRepository, HardDisqualifierRepository, PolicyRepository, UnitOfWork } from './repositoryContracts.js';
+@@
+ import {
+@@
+ } from '../services/hardDisqualifierService.js';
++import { calculateCoverageMatrix, validateCoveragePolicyConfiguration } from '../services/coverageMatrixService.js';
+@@
+ async function evaluateHardDisqualifierInTransaction(client, input) {
+@@
+ }
++
++async function calculateCoverageInTransaction(client, input) {
++  const request = (await client.query('SELECT * FROM requests WHERE id = $1 FOR UPDATE', [input.requestId])).rows[0];
++  if (!request) throw Object.assign(new Error('Request not found.'), { code: 'REQUEST_NOT_FOUND' });
++  const policy = (await client.query(`
++    SELECT * FROM policy_configurations WHERE policy_key = 'coverage_matrix' AND active = true
++      AND effective_from <= now() AND (effective_until IS NULL OR effective_until > now())
++      AND (assistance_type IS NULL OR assistance_type = $1)
++    ORDER BY (assistance_type IS NOT NULL) DESC, version DESC LIMIT 1
++  `, [request.assistance_type])).rows[0];
++  if (!policy) throw Object.assign(new Error('No effective coverage-matrix policy exists.'), { code: 'COVERAGE_POLICY_NOT_FOUND' });
++  const inputVersion = (await client.query('SELECT * FROM coverage_input_versions WHERE request_id = $1 ORDER BY version DESC LIMIT 1', [request.id])).rows[0];
++  if (!inputVersion) throw Object.assign(new Error('Verified coverage inputs are required before calculating coverage.'), { code: 'COVERAGE_INPUT_REQUIRED' });
++  const result = calculateCoverageMatrix({ request, input: inputVersion.input_data, policy, hardDisqualifierOutcome: request.hard_disqualifier_outcome });
++  const snapshotId = input.id || id('coverage-snapshot');
++  await client.query(`
++    INSERT INTO coverage_calculation_snapshots (
++      id, request_id, input_version_id, policy_version_id, policy_version,
++      hard_disqualifier_evaluation_id, calculator_version, input_snapshot,
++      policy_snapshot, result, calculated_by, correlation_id
++    ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
++  `, [snapshotId, request.id, inputVersion.id, policy.id, policy.policy_version,
++    request.hard_disqualifier_evaluation_id, result.calculatorVersion || 'coverage-matrix-1',
++    inputVersion.input_data, policy.configuration, result, input.actorId || null, input.correlationId || null]);
++  await client.query('UPDATE requests SET coverage_matrix_outcome = $2, coverage_snapshot_id = $3, updated_at = now() WHERE id = $1', [request.id, result.outcome, snapshotId]);
++  await appendAudit(client, {
++    actorId: input.actorId || 'system', actorType: input.actorId ? 'staff' : 'system',
++    actionType: 'coverage_matrix_calculated', recordType: 'coverage_calculation_snapshot', recordId: snapshotId,
++    oldValue: { outcome: request.coverage_matrix_outcome, snapshotId: request.coverage_snapshot_id },
++    newValue: { requestId: request.id, outcome: result.outcome, coveredAmount: result.coveredAmount,
++      netRemainingBalance: result.netRemainingBalance, reasonCodes: result.reasonCodes,
++      policyVersion: policy.policy_version, inputVersion: inputVersion.version },
++    justification: input.justification || 'Calculate coverage from verified inputs and the effective policy.', correlationId: input.correlationId,
++  });
++  return { ...result, snapshotId, inputVersionId: inputVersion.id, inputVersion: inputVersion.version, policyVersionId: policy.id };
++}
+@@
+       if (input.decision === 'approved') {
+@@
+         if (!hardDisqualifiers.approvalAllowed) return { hardDisqualifierBlocked: true, hardDisqualifiers };
++        const coveragePolicy = (await client.query(`SELECT * FROM policy_configurations WHERE policy_key = 'coverage_matrix' AND active = true AND effective_from <= now() AND (effective_until IS NULL OR effective_until > now()) AND (assistance_type IS NULL OR assistance_type = $1) ORDER BY (assistance_type IS NOT NULL) DESC, version DESC LIMIT 1`, [current.assistance_type])).rows[0];
++        if (coveragePolicy?.configuration?.status === 'active') {
++          const coverage = await calculateCoverageInTransaction(client, { requestId: input.requestId, actorId: input.actorId, justification: 'Calculate coverage after hard-disqualifier clearance and before the coverage decision.', correlationId: input.correlationId });
++          if (coverage.outcome === 'ineligible') return { coverageBlocked: true, coverage };
++          input.coverageSnapshotId = coverage.snapshotId;
++          input.amount = coverage.coveredAmount;
++          input.decisionSnapshot = { ...(input.decisionSnapshot || {}), coverage };
++          if (input.budgetReservation) input.budgetReservation = { ...input.budgetReservation, amount: coverage.coveredAmount };
++        }
+       }
+@@
+-          (id, request_id, policy_version_id, decision, decision_snapshot, amount, decided_by, justification)
+-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
++          (id, request_id, policy_version_id, decision, decision_snapshot, amount, decided_by, justification, coverage_snapshot_id)
++        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+       `, [decisionId, input.requestId, input.policyVersionId, input.decision,
+-        input.decisionSnapshot, input.amount ?? null, input.actorId, input.justification]);
++        input.decisionSnapshot, input.amount ?? null, input.actorId, input.justification, input.coverageSnapshotId || null]);
+@@
+     if (result.hardDisqualifierBlocked) {
+@@
+       throw error;
+     }
++    if (result.coverageBlocked) throw Object.assign(new Error(result.coverage.adjustments[0]?.message || 'The coverage matrix returned ineligible.'), { code: 'COVERAGE_INELIGIBLE', coverageResult: result.coverage });
+     return result;
+@@
+   async createPolicyVersion(input) {
+@@
+     if (input.policyKey === 'hard_disqualifiers') validateHardDisqualifierPolicyConfiguration(input.configuration);
++    if (input.policyKey === 'coverage_matrix') validateCoveragePolicyConfiguration(input.configuration);
+*** Update File: server/storage/postgresRepositories.js
+@@
+ export class PostgresHardDisqualifierRepository extends HardDisqualifierRepository {
+@@
+ }
++
++export class PostgresCoverageMatrixRepository extends CoverageMatrixRepository {
++  constructor(database) { super(); this.database = database; }
++
++  async recordVerifiedInput(input) {
++    const source = String(input.verificationSource || '').trim();
++    const justification = String(input.justification || '').trim();
++    if (!['staff', 'integration'].includes(source) || !input.actorId || justification.length < 10) throw Object.assign(new Error('Staff or integration verification and a detailed justification are required.'), { code: 'COVERAGE_VERIFICATION_REQUIRED' });
++    if (!input.inputData || typeof input.inputData !== 'object' || Array.isArray(input.inputData)) throw Object.assign(new Error('Structured coverage input data is required.'), { code: 'COVERAGE_INPUT_REQUIRED' });
++    return this.database.withTransaction(async (client) => {
++      const request = (await client.query('SELECT id FROM requests WHERE id = $1 FOR UPDATE', [input.requestId])).rows[0];
++      if (!request) throw Object.assign(new Error('Request not found.'), { code: 'REQUEST_NOT_FOUND' });
++      const nextVersion = Number((await client.query('SELECT COALESCE(max(version),0)+1 AS value FROM coverage_input_versions WHERE request_id = $1', [input.requestId])).rows[0].value);
++      const inputId = input.id || id('coverage-input');
++      const normalizedInput = { ...input.inputData, payerDeductions: (Array.isArray(input.inputData.payerDeductions) ? input.inputData.payerDeductions : []).map((item) => ({ ...item, verified: true, verificationMethod: source })) };
++      const recorded = (await client.query(`INSERT INTO coverage_input_versions (id, request_id, version, input_data, verified_by, verification_source, justification) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`, [inputId, input.requestId, nextVersion, normalizedInput, input.actorId, source, justification])).rows[0];
++      await appendAudit(client, { actorId: input.actorId, actorType: 'staff', actionType: 'coverage_inputs_verified', recordType: 'coverage_input_version', recordId: inputId, newValue: { requestId: input.requestId, version: nextVersion, verificationSource: source, payerTypes: normalizedInput.payerDeductions.map((item) => item.payerType) }, justification });
++      return recorded;
++    }, { isolationLevel: 'SERIALIZABLE' });
++  }
++
++  calculateRequest(input) { return this.database.withTransaction((client) => calculateCoverageInTransaction(client, input), { isolationLevel: 'SERIALIZABLE' }); }
++
++  async getRequestHistory({ requestId }) {
++    const [inputs, calculations] = await Promise.all([
++      this.database.query('SELECT * FROM coverage_input_versions WHERE request_id = $1 ORDER BY version DESC', [requestId]),
++      this.database.query('SELECT * FROM coverage_calculation_snapshots WHERE request_id = $1 ORDER BY calculated_at DESC', [requestId]),
++    ]);
++    return { inputs: inputs.rows, calculations: calculations.rows };
++  }
++}
+@@
+     hardDisqualifiers: new PostgresHardDisqualifierRepository(database),
++    coverage: new PostgresCoverageMatrixRepository(database),
+*** End Patch
